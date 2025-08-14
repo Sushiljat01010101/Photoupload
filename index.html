@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Photo Gallery</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1><i class="fas fa-camera"></i> Photo Gallery</h1>
+            <div class="header-stats">
+                <span id="photo-count">0 photos</span>
+                <span id="storage-used">0 MB used</span>
+            </div>
+            <div class="header-actions">
+                <button class="logout-btn" id="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+                <button class="header-menu-toggle" id="header-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="main-nav">
+        <button class="nav-tab active" data-tab="gallery">
+            <i class="fas fa-images"></i> Gallery
+        </button>
+        <button class="nav-tab" data-tab="memories">
+            <i class="fas fa-clock"></i> Memories
+        </button>
+    </nav>
+
+    <!-- Upload Section -->
+    <section class="upload-section tab-content" id="gallery-content">
+        <div class="upload-container">
+            <div class="upload-area" id="upload-area">
+                <div class="upload-content">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Drag & Drop Photos Here</h3>
+                    <p>or <span class="browse-link">browse files</span></p>
+                    <input type="file" id="photo-input" accept="image/*" multiple style="display: none;">
+                </div>
+                <div class="upload-progress" id="upload-progress" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <div class="progress-text" id="progress-text">0%</div>
+                </div>
+            </div>
+            
+            <!-- Image Preview Section -->
+            <div class="preview-section" id="preview-section" style="display: none;">
+                <h3>Preview & Edit</h3>
+                <div class="preview-container" id="preview-container"></div>
+                <div class="category-selection">
+                    <label for="upload-category">Select Category:</label>
+                    <select id="upload-category">
+                        <option value="memories">Memories</option>
+                        <option value="friends">Friends</option>
+                        <option value="family">Family</option>
+                        <option value="travel">Travel</option>
+                        <option value="food">Food</option>
+                        <option value="selfies">Selfies</option>
+                        <option value="nature">Nature</option>
+                        <option value="pets">Pets</option>
+                        <option value="celebration">Celebration</option>
+                        <option value="work">Work</option>
+                        <option value="hobby">Hobby</option>
+                        <option value="screenshots">Screenshots</option>
+                        <option value="documents">Documents</option>
+                        <option value="favorites">Favorites</option>
+                        <option value="shopping">Shopping</option>
+                        <option value="sports">Sports</option>
+                        <option value="education">Education</option>
+                        <option value="fitness">Fitness</option>
+                        <option value="art">Art</option>
+                        <option value="music">Music</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <div class="custom-category-input" style="margin-top: 0.5rem;">
+                        <input type="text" id="custom-category" placeholder="या अपना category लिखें..." style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-size: 0.9rem;">
+                    </div>
+                </div>
+                <div class="preview-actions">
+                    <button class="btn btn-secondary" id="cancel-upload">Cancel</button>
+                    <button class="btn btn-primary" id="confirm-upload">Upload All</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Controls -->
+    <section class="gallery-controls">
+        <div class="controls-container">
+            <div class="search-filter">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Search photos...">
+                </div>
+                <div class="filter-controls">
+                    <select id="sort-select">
+                        <option value="date-desc">Newest First</option>
+                        <option value="date-asc">Oldest First</option>
+                        <option value="name-asc">Name A-Z</option>
+                        <option value="name-desc">Name Z-A</option>
+                        <option value="size-desc">Largest First</option>
+                        <option value="size-asc">Smallest First</option>
+                    </select>
+                    <select id="filter-select">
+                        <option value="all">All Photos</option>
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="year">This Year</option>
+                    </select>
+                    <select id="category-select">
+                        <option value="all">All Categories</option>
+                        <option value="memories">Memories</option>
+                        <option value="friends">Friends</option>
+                        <option value="family">Family</option>
+                        <option value="travel">Travel</option>
+                        <option value="food">Food</option>
+                        <option value="selfies">Selfies</option>
+                        <option value="nature">Nature</option>
+                        <option value="pets">Pets</option>
+                        <option value="celebration">Celebration</option>
+                        <option value="work">Work</option>
+                        <option value="hobby">Hobby</option>
+                        <option value="screenshots">Screenshots</option>
+                        <option value="documents">Documents</option>
+                        <option value="favorites">Favorites</option>
+                        <option value="shopping">Shopping</option>
+                        <option value="sports">Sports</option>
+                        <option value="education">Education</option>
+                        <option value="fitness">Fitness</option>
+                        <option value="art">Art</option>
+                        <option value="music">Music</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="view-controls">
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="grid"><i class="fas fa-th"></i></button>
+                    <button class="view-btn" data-view="list"><i class="fas fa-list"></i></button>
+                </div>
+                <div class="selection-controls">
+                    <button class="btn btn-primary" id="select-all">
+                        <i class="fas fa-check-square"></i> Select All
+                    </button>
+                </div>
+                <div class="bulk-actions" id="bulk-actions" style="display: none;">
+                    <button class="btn btn-danger" id="delete-selected">Delete Selected</button>
+                    <button class="btn btn-secondary" id="export-selected">
+                        <i class="fas fa-download"></i> Download Selected
+                    </button>
+                    <button class="btn btn-secondary" id="clear-selection">Clear Selection</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="gallery-container" id="gallery-container">
+            <div class="loading-spinner" id="loading-spinner">
+                <div class="spinner"></div>
+                <p>Loading photos...</p>
+            </div>
+            <div class="empty-state" id="empty-state" style="display: none;">
+                <i class="fas fa-images"></i>
+                <h3>No photos uploaded yet</h3>
+                <p>Upload your first photo to get started</p>
+            </div>
+            <div class="category-summary" id="category-summary" style="display: none;">
+                <h3>Category Summary</h3>
+                <div class="category-cards" id="category-cards"></div>
+            </div>
+            <div class="gallery-grid" id="gallery-grid"></div>
+        </div>
+    </section>
+
+    <!-- Image Editor Modal -->
+    <div class="modal" id="editor-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Photo</h3>
+                <button class="close-btn" id="close-editor">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="editor-container">
+                    <canvas id="editor-canvas"></canvas>
+                </div>
+                <div class="editor-controls">
+                    <div class="editor-section">
+                        <h4>Transform</h4>
+                        <div class="editor-buttons">
+                            <button class="btn btn-secondary" id="rotate-left"><i class="fas fa-undo"></i> Rotate Left</button>
+                            <button class="btn btn-secondary" id="rotate-right"><i class="fas fa-redo"></i> Rotate Right</button>
+                            <button class="btn btn-secondary" id="flip-horizontal"><i class="fas fa-arrows-alt-h"></i> Flip H</button>
+                            <button class="btn btn-secondary" id="flip-vertical"><i class="fas fa-arrows-alt-v"></i> Flip V</button>
+                        </div>
+                    </div>
+                    <div class="editor-section">
+                        <h4>Filters</h4>
+                        <div class="filter-controls">
+                            <label>Brightness: <input type="range" id="brightness" min="0" max="200" value="100"></label>
+                            <label>Contrast: <input type="range" id="contrast" min="0" max="200" value="100"></label>
+                            <label>Saturation: <input type="range" id="saturation" min="0" max="200" value="100"></label>
+                            <label>Blur: <input type="range" id="blur" min="0" max="10" value="0"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="reset-editor">Reset</button>
+                <button class="btn btn-primary" id="save-edit">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Photo Detail Modal -->
+    <div class="modal" id="photo-modal">
+        <div class="modal-content photo-modal-content">
+            <div class="modal-header">
+                <div class="photo-info">
+                    <h3 id="photo-title"></h3>
+                    <p id="photo-date"></p>
+                </div>
+                <button class="close-btn" id="close-photo">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="photo-display">
+                    <img id="modal-image" alt="Photo">
+                    <div class="photo-navigation">
+                        <button class="nav-btn" id="prev-photo"><i class="fas fa-chevron-left"></i></button>
+                        <button class="nav-btn" id="next-photo"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div class="photo-metadata">
+                    <div class="metadata-section">
+                        <h4>Details</h4>
+                        <div class="metadata-grid">
+                            <div class="metadata-item">
+                                <span class="label">Size:</span>
+                                <span id="photo-size"></span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="label">Dimensions:</span>
+                                <span id="photo-dimensions"></span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="label">Upload Date:</span>
+                                <span id="photo-upload-date"></span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="label">Category:</span>
+                                <span id="photo-category"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="metadata-section">
+                        <h4>Edit Name</h4>
+                        <div class="name-edit-section">
+                            <input type="text" id="photo-name-input" placeholder="Enter photo name">
+                            <button class="btn btn-primary" id="save-name">Save Name</button>
+                        </div>
+                    </div>
+                    <div class="metadata-section">
+                        <h4>Actions</h4>
+                        <div class="photo-actions">
+                            <button class="btn btn-secondary" id="edit-photo"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="btn btn-secondary" id="share-photo"><i class="fas fa-share"></i> Share</button>
+                            <button class="btn btn-secondary" id="download-photo"><i class="fas fa-download"></i> Download</button>
+                            <button class="btn btn-danger" id="delete-photo"><i class="fas fa-trash"></i> Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Environment Variables Script -->
+    <script>
+        // Inject environment variables for browser access
+        window.NOTION_INTEGRATION_SECRET = process?.env?.NOTION_INTEGRATION_SECRET;
+        window.NOTION_PAGE_URL = process?.env?.NOTION_PAGE_URL;
+    </script>
+    
+    <!-- Memories Timeline Section -->
+    <section class="memories-timeline tab-content" id="memories-content" style="display: none;">
+        <div id="memories-timeline">
+            <!-- Timeline will be populated here by JavaScript -->
+        </div>
+    </section>
+
+    <!-- App Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/notionClient.js"></script>
+    <script src="js/imageProcessor.js"></script>
+    <script src="js/uploadManager.js"></script>
+    <script src="js/photoGallery.js"></script>
+    <script src="js/memoriesTimeline.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
